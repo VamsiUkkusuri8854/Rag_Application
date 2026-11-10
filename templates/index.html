@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RAG Assistant | AI Document Chat</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Markdown and HTML sanitization -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="brand">
+                <span class="brand-icon">✦</span>
+                <h2>RAG Assistant</h2>
+            </div>
+
+            <button class="new-chat" id="newChatBtn">
+                <span>＋</span> New Chat
+            </button>
+
+            <div class="sidebar-section">
+                <p class="sidebar-label">DOCUMENT ASSISTANT</p>
+
+                <div class="document-info" id="documentInfo">
+                    <span>📄</span>
+                    <span id="sidebarFileName">No document uploaded</span>
+                </div>
+            </div>
+
+            <div class="sidebar-bottom">
+                <div>✦ Powered by LangChain</div>
+                <div>✧ Google Gemini AI</div>
+                <div>◈ ChromaDB Vector Store</div>
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="main-container">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div>
+                    <h3>Document Chat</h3>
+                    <p class="topbar-subtitle">AI-powered PDF assistant</p>
+                </div>
+
+                <span class="status" id="status">
+                    <span class="status-dot"></span>
+                    Ready
+                </span>
+
+            </header>
+
+
+            <!-- CHAT AREA -->
+            <section class="chat-area" id="chatArea">
+
+                <!-- WELCOME SCREEN -->
+                <div class="welcome-screen" id="welcome">
+
+                    <div class="welcome-icon">✦</div>
+
+                    <h1>What can I help you with?</h1>
+
+                    <p>
+                        Upload your PDF document and explore its contents
+                        through natural conversation.
+                    </p>
+
+                    <!-- UPLOAD BOX -->
+                    <div class="upload-box" id="uploadBox">
+
+                        <input type="file" id="pdfInput" accept=".pdf,application/pdf" hidden>
+
+                        <div class="upload-icon">📄</div>
+
+                        <h3>Upload your PDF document</h3>
+
+                        <p>Choose a PDF file to get started</p>
+
+                        <button type="button" class="upload-button" id="uploadBtn">
+                            Upload PDF Document
+                        </button>
+
+                        <p class="file-name" id="fileName">
+                            No file selected
+                        </p>
+
+                    </div>
+
+                    <!-- SUGGESTIONS -->
+                    <div class="suggestions">
+
+                        <div class="suggestion">
+                            <span>✦</span>
+                            Summarize this document
+                        </div>
+
+                        <div class="suggestion">
+                            <span>✦</span>
+                            Explain important concepts
+                        </div>
+
+                        <div class="suggestion">
+                            <span>✦</span>
+                            Generate key points
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- INPUT SECTION -->
+            <div class="input-section">
+
+                <div class="input-container">
+
+                    <textarea id="userInput" rows="1" placeholder="Ask anything about your document..."></textarea>
+
+                    <button type="button" id="sendBtn" title="Send message">
+                        ↑
+                    </button>
+
+                </div>
+
+                <p class="footer-note">
+                    RAG Assistant can make mistakes.
+                    Verify important information.
+                </p>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
