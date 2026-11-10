@@ -74,3 +74,4 @@ You can verify your Gemini API key and model connectivity using:
 ```bash
 python test_gemini.py
 ```
+
