@@ -9,3 +9,5 @@ langchain-chroma
 chromadb
 pypdf
 python-dotenv
+gunicorn
+
