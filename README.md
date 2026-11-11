@@ -1,29 +1,30 @@
-# RAG Retrieval - PDF Chat with Google Gemini & ChromaDB
+# RAG Application - Interactive 16-Stage Pipeline Dashboard & Document Chat
 
-An end-to-end Retrieval-Augmented Generation (RAG) system built with Flask, LangChain, ChromaDB, and Google Gemini models. Upload PDF documents and ask questions grounded in their content with semantic search, relevant context chunking, and generative AI responses.
+An end-to-end Retrieval-Augmented Generation (RAG) system and interactive architecture visualizer built with Flask, LangChain, ChromaDB, and Google Gemini AI.
 
 ## Features
 
-- **Document Processing**: Upload PDFs (up to 20 MB) with automatic text extraction using PyPDF.
-- **Smart Chunking**: Text splitting using LangChain's `RecursiveCharacterTextSplitter`.
-- **Vector Search**: Embeddings stored and queried via ChromaDB with persistence.
-- **Gemini Powered**: Generates high-accuracy answers grounded strictly in retrieved context using Google Gemini models (`gemini-3.5-flash-lite`, `gemini-embedding-001`).
-- **Interactive UI**: Clean, modern web frontend with real-time feedback, upload status, and chat interface.
+- **16-Stage Interactive RAG Pipeline Dashboard**: Visualizes every single step of the RAG lifecycle (PDF Upload, Validation, Parsing, Extraction, Preprocessing, Chunking, Embeddings, ChromaDB Storage, User Query, Query Embedding, Similarity Search, Relevant Retrieval, Context Preparation, Prompt Construction, Gemini LLM Processing, and Final Answer Generation).
+- **Deep Inspection**: View actual page-wise extracted text, all chunks with character metrics, 3,072-dimensional embedding vectors, cosine/L2 distance scores, prompt templates, and execution latency.
+- **Conversational Document Chat**: Switch seamlessly to chat mode with source citations, page-level references, and formatted Markdown rendering.
+- **Smart Chunking**: RecursiveCharacterTextSplitter with configurable chunk size (1000) and overlap (200).
+- **Persistent Vector Store**: ChromaDB integration with HNSW indexing and metadata filtering.
+- **Google Gemini Integration**: Google Generative AI (`gemini-3.5-flash-lite`, `gemini-embedding-001`).
 
 ## Project Structure
 
 ```text
-├── app.py                 # Flask server and API endpoints (/upload, /ask)
+├── app.py                 # Flask web server and pipeline inspection APIs
 ├── requirements.txt       # Python dependencies
 ├── .env.example           # Template for environment variables
 ├── src/
 │   ├── __init__.py
-│   └── rag_pipeline.py    # Document loading, chunking, embeddings, ChromaDB & Gemini pipeline
+│   └── rag_pipeline.py    # Complete 16-stage RAG pipeline engine
 ├── static/
-│   ├── script.js          # Client-side chat and file upload logic
-│   └── style.css          # UI styling
+│   ├── script.js          # Interactive dashboard controller & chat handler
+│   └── style.css          # Dark sidebar & modern clean dashboard theme
 ├── templates/
-│   └── index.html         # Web chat interface
+│   └── index.html         # Responsive 3-section dashboard & chat interface
 └── test_gemini.py         # Gemini API connectivity test script
 ```
 
@@ -31,8 +32,8 @@ An end-to-end Retrieval-Augmented Generation (RAG) system built with Flask, Lang
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/VamsiUkkusuri8854/rag_retrivel.git
-cd rag_retrivel
+git clone https://github.com/VamsiUkkusuri8854/Rag_Application.git
+cd Rag_Application
 ```
 
 ### 2. Create and activate a virtual environment
