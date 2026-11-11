@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>RAG Assistant | AI Document Chat</title>
+    <title>RAG Assistant | Interactive Pipeline Dashboard</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -19,8 +24,10 @@
 
     <div class="app-container">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
+        <!-- ========================================================= -->
+        <!-- 1. LEFT SIDEBAR: DARK PROFESSIONAL 16-STAGE PIPELINE -->
+        <!-- ========================================================= -->
+        <aside class="sidebar" id="sidebar">
 
             <div class="brand">
                 <span class="brand-icon">✦</span>
@@ -31,13 +38,125 @@
                 <span>＋</span> New Chat
             </button>
 
-            <div class="sidebar-section">
-                <p class="sidebar-label">DOCUMENT ASSISTANT</p>
+            <!-- Mode Switcher -->
+            <div class="view-mode-toggle">
+                <button type="button" class="mode-btn active" id="btnModeDashboard">
+                    <span>📊</span> Dashboard
+                </button>
+                <button type="button" class="mode-btn" id="btnModeChat">
+                    <span>💬</span> Chat
+                </button>
+            </div>
 
+            <div class="sidebar-section">
+                <p class="sidebar-label">ACTIVE DOCUMENT</p>
                 <div class="document-info" id="documentInfo">
                     <span>📄</span>
                     <span id="sidebarFileName">No document uploaded</span>
                 </div>
+            </div>
+
+            <!-- Pipeline Stages Navigation -->
+            <div class="sidebar-pipeline-nav">
+                
+                <!-- Indexing Section -->
+                <div class="sidebar-label pipeline-phase-label">
+                    <span>DOCUMENT INDEXING</span>
+                    <span class="phase-badge green">1-8</span>
+                </div>
+
+                <ul class="pipeline-menu">
+                    <li class="pipeline-item active" data-stage="1" id="stageItem-1">
+                        <span class="step-num">01</span>
+                        <span class="step-text">PDF Upload</span>
+                        <span class="step-status status-pending" id="stageDot-1"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="2" id="stageItem-2">
+                        <span class="step-num">02</span>
+                        <span class="step-text">PDF Validation</span>
+                        <span class="step-status status-pending" id="stageDot-2"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="3" id="stageItem-3">
+                        <span class="step-num">03</span>
+                        <span class="step-text">PDF Parsing</span>
+                        <span class="step-status status-pending" id="stageDot-3"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="4" id="stageItem-4">
+                        <span class="step-num">04</span>
+                        <span class="step-text">Text Extraction</span>
+                        <span class="step-status status-pending" id="stageDot-4"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="5" id="stageItem-5">
+                        <span class="step-num">05</span>
+                        <span class="step-text">Text Preprocessing</span>
+                        <span class="step-status status-pending" id="stageDot-5"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="6" id="stageItem-6">
+                        <span class="step-num">06</span>
+                        <span class="step-text">Text Chunking</span>
+                        <span class="step-status status-pending" id="stageDot-6"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="7" id="stageItem-7">
+                        <span class="step-num">07</span>
+                        <span class="step-text">Embedding Generation</span>
+                        <span class="step-status status-pending" id="stageDot-7"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="8" id="stageItem-8">
+                        <span class="step-num">08</span>
+                        <span class="step-text">ChromaDB Storage</span>
+                        <span class="step-status status-pending" id="stageDot-8"></span>
+                    </li>
+                </ul>
+
+                <!-- Question Answering Section -->
+                <div class="sidebar-label pipeline-phase-label" style="margin-top: 18px;">
+                    <span>QUESTION ANSWERING</span>
+                    <span class="phase-badge blue">9-16</span>
+                </div>
+
+                <ul class="pipeline-menu">
+                    <li class="pipeline-item" data-stage="9" id="stageItem-9">
+                        <span class="step-num">09</span>
+                        <span class="step-text">User Query</span>
+                        <span class="step-status status-pending" id="stageDot-9"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="10" id="stageItem-10">
+                        <span class="step-num">10</span>
+                        <span class="step-text">Query Embedding</span>
+                        <span class="step-status status-pending" id="stageDot-10"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="11" id="stageItem-11">
+                        <span class="step-num">11</span>
+                        <span class="step-text">Similarity Search</span>
+                        <span class="step-status status-pending" id="stageDot-11"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="12" id="stageItem-12">
+                        <span class="step-num">12</span>
+                        <span class="step-text">Relevant Chunk Retrieval</span>
+                        <span class="step-status status-pending" id="stageDot-12"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="13" id="stageItem-13">
+                        <span class="step-num">13</span>
+                        <span class="step-text">Context Preparation</span>
+                        <span class="step-status status-pending" id="stageDot-13"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="14" id="stageItem-14">
+                        <span class="step-num">14</span>
+                        <span class="step-text">Prompt Construction</span>
+                        <span class="step-status status-pending" id="stageDot-14"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="15" id="stageItem-15">
+                        <span class="step-num">15</span>
+                        <span class="step-text">Gemini LLM Processing</span>
+                        <span class="step-status status-pending" id="stageDot-15"></span>
+                    </li>
+                    <li class="pipeline-item" data-stage="16" id="stageItem-16">
+                        <span class="step-num">16</span>
+                        <span class="step-text">Final Answer Generation</span>
+                        <span class="step-status status-pending" id="stageDot-16"></span>
+                    </li>
+                </ul>
+
             </div>
 
             <div class="sidebar-bottom">
@@ -49,27 +168,196 @@
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- ========================================================= -->
+        <!-- 2. MAIN CONTENT AREA -->
+        <!-- ========================================================= -->
         <main class="main-container">
 
             <!-- TOP BAR -->
             <header class="topbar">
-
                 <div>
-                    <h3>Document Chat</h3>
-                    <p class="topbar-subtitle">AI-powered PDF assistant</p>
+                    <h3 id="topbarTitle">RAG Pipeline Dashboard</h3>
+                    <p class="topbar-subtitle" id="topbarSubtitle">Interactive AI Architecture & Internal Processing Inspector</p>
                 </div>
 
-                <span class="status" id="status">
-                    <span class="status-dot"></span>
-                    Ready
-                </span>
-
+                <div class="topbar-right">
+                    <button type="button" class="topbar-btn" id="topbarSampleBtn" title="Load sample document ml.pdf">
+                        <span>⚡</span> Load Sample PDF
+                    </button>
+                    <button type="button" class="topbar-btn primary" id="topbarUploadBtn" onclick="document.getElementById('globalPdfInput').click();" style="cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                        <span>📤</span> Upload PDF
+                    </button>
+                    <span class="status" id="status">
+                        <span class="status-dot"></span>
+                        <span id="statusText">Ready</span>
+                    </span>
+                </div>
             </header>
 
 
-            <!-- CHAT AREA -->
-            <section class="chat-area" id="chatArea">
+            <!-- ===================================================== -->
+            <!-- DASHBOARD VIEW: METRICS, FLOWCHART & STAGE INSPECTOR -->
+            <!-- ===================================================== -->
+            <div class="dashboard-scroll-view" id="dashboardScrollView">
+
+                <!-- TOP STATISTICS CARDS (ACTUAL VALUES) -->
+                <section class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper teal">📑</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statPdfPages">0</div>
+                            <div class="stat-label">Total PDF Pages</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper green">🔤</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statExtractedChars">0</div>
+                            <div class="stat-label">Extracted Characters</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper purple">✂️</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statTotalChunks">0</div>
+                            <div class="stat-label">Total Chunks</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper indigo">🧬</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statGeneratedEmbeddings">0</div>
+                            <div class="stat-label">Generated Embeddings</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper amber">💾</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statStoredVectors">0</div>
+                            <div class="stat-label">Stored Vectors</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper cyan">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statRetrievedChunks">0</div>
+                            <div class="stat-label">Retrieved Chunks</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon-wrapper rose">💬</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statTotalQuestions">0</div>
+                            <div class="stat-label">Total Questions Asked</div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <!-- INTERACTIVE VISUAL PIPELINE FLOWCHART -->
+                <section class="flowchart-section">
+                    <div class="flowchart-header">
+                        <div class="flowchart-title">
+                            <span>🗺️</span>
+                            <h4>Interactive RAG Architecture Flowchart</h4>
+                        </div>
+                        <div class="flowchart-legend">
+                            <span class="legend-item"><span class="legend-dot green"></span> Completed</span>
+                            <span class="legend-item"><span class="legend-dot blue"></span> Processing</span>
+                            <span class="legend-item"><span class="legend-dot grey"></span> Not Started</span>
+                        </div>
+                    </div>
+
+                    <!-- Flow Track 1: Document Indexing -->
+                    <div class="flow-track-title">DOCUMENT INDEXING:</div>
+                    <div class="flow-nodes-row">
+                        <div class="flow-node active" data-stage="1" id="flowNode-1">PDF Upload</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="2" id="flowNode-2">Validation</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="3" id="flowNode-3">Parsing</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="4" id="flowNode-4">Text Extraction</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="5" id="flowNode-5">Preprocessing</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="6" id="flowNode-6">Chunking</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="7" id="flowNode-7">Embeddings</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="8" id="flowNode-8">ChromaDB</div>
+                    </div>
+
+                    <!-- Flow Track 2: Question Answering -->
+                    <div class="flow-track-title" style="margin-top: 14px; color: var(--primary);">QUESTION ANSWERING:</div>
+                    <div class="flow-nodes-row">
+                        <div class="flow-node" data-stage="9" id="flowNode-9">User Question</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="10" id="flowNode-10">Query Embedding</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="11" id="flowNode-11">Similarity Search</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="12" id="flowNode-12">Retrieval</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="13" id="flowNode-13">Context Preparation</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="14" id="flowNode-14">Prompt Construction</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="15" id="flowNode-15">Gemini</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-node" data-stage="16" id="flowNode-16">Final Answer</div>
+                    </div>
+                </section>
+
+
+                <!-- MAIN DYNAMIC STAGE INSPECTOR CONTAINER -->
+                <section class="stage-inspector-card">
+
+                    <div class="stage-inspector-header">
+                        <div class="stage-header-info">
+                            <span class="stage-badge" id="currentStageBadge">Stage 01 of 16</span>
+                            <h2 class="stage-heading" id="currentStageTitle">Stage 1: PDF Upload</h2>
+                            <p class="stage-subheading" id="currentStageDesc">Upload a PDF document via file selector or drag-and-drop zone.</p>
+                        </div>
+
+                        <div class="stage-header-actions">
+                            <span class="timing-badge" id="currentStageTiming">⚡ Execution: --</span>
+                            <span class="stage-status-pill status-pending" id="currentStageStatusPill">Not Started</span>
+                            <div class="stage-nav-group">
+                                <button type="button" class="nav-arrow-btn" id="btnPrevStage" title="Previous Stage">← Prev</button>
+                                <button type="button" class="nav-arrow-btn" id="btnNextStage" title="Next Stage">Next →</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Internal Process Banner -->
+                    <div class="internal-process-banner">
+                        <div class="internal-process-label">⚙️ What Happens Internally:</div>
+                        <div class="internal-process-text" id="currentStageMechanism">
+                            Receives multi-part file upload, verifies file envelope, saves securely to uploads directory on server storage.
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Output Box -->
+                    <div class="stage-content-body" id="stageContentBody">
+                        <!-- Injected by script.js -->
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <!-- ===================================================== -->
+            <!-- CHAT VIEW: DIRECT CONVERSATIONAL RAG WORKFLOW -->
+            <!-- ===================================================== -->
+            <section class="chat-area" id="chatArea" style="display: none;">
 
                 <!-- WELCOME SCREEN -->
                 <div class="welcome-screen" id="welcome">
@@ -84,17 +372,17 @@
                     </p>
 
                     <!-- UPLOAD BOX -->
-                    <div class="upload-box" id="uploadBox">
+                    <div class="upload-box" id="uploadBox" onclick="document.getElementById('pdfInput').click();" style="cursor: pointer;">
 
-                        <input type="file" id="pdfInput" accept=".pdf,application/pdf" hidden>
+                        <input type="file" id="pdfInput" accept=".pdf,application/pdf" style="display: none;" onchange="if (this.files && this.files[0]) { window.handleFileUpload(this.files[0]); }">
 
                         <div class="upload-icon">📄</div>
 
                         <h3>Upload your PDF document</h3>
 
-                        <p>Choose a PDF file to get started</p>
+                        <p>Choose a PDF file to get started (or drag & drop here)</p>
 
-                        <button type="button" class="upload-button" id="uploadBtn">
+                        <button type="button" class="upload-button" id="uploadBtn" onclick="event.stopPropagation(); document.getElementById('pdfInput').click();" style="cursor: pointer;">
                             Upload PDF Document
                         </button>
 
@@ -129,7 +417,7 @@
             </section>
 
 
-            <!-- INPUT SECTION -->
+            <!-- ANCHORED INPUT SECTION (ACCESSIBLE IN BOTH MODES) -->
             <div class="input-section">
 
                 <div class="input-container">
@@ -143,14 +431,42 @@
                 </div>
 
                 <p class="footer-note">
-                    RAG Assistant can make mistakes.
-                    Verify important information.
+                    RAG Assistant can make mistakes. Verify important information.
                 </p>
 
             </div>
 
         </main>
 
+    </div>
+
+
+    <!-- ACCESSIBLE FILE INPUT -->
+    <input type="file" id="globalPdfInput" accept=".pdf,application/pdf" style="display: none;" onchange="if (this.files && this.files[0]) { window.handleFileUpload(this.files[0]); }">
+
+
+    <!-- VECTOR INSPECTION MODAL -->
+    <div class="modal-overlay" id="vectorModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h3 id="vectorModalTitle">Chunk Embedding Vector (3,072 Dimensions)</h3>
+                    <p class="modal-subtitle">Model: gemini-embedding-001 (Google Generative AI)</p>
+                </div>
+                <button type="button" class="modal-close" id="closeVectorModal">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="vector-modal-stats">
+                    <span class="badge">Length: <strong id="vectorModalDim">3072</strong></span>
+                    <button type="button" class="btn-copy" id="btnCopyFullVector">
+                        📋 Copy Complete Vector
+                    </button>
+                </div>
+                <div class="vector-code-wrapper">
+                    <pre><code id="vectorModalCode">Loading vector...</code></pre>
+                </div>
+            </div>
+        </div>
     </div>
 
 
